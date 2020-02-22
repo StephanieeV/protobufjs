@@ -1,0 +1,547 @@
+{
+  "nested": {
+    "grSim_Robot_Command": {
+      "fields": {
+        "id": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 1
+        },
+        "kickspeedx": {
+          "rule": "required",
+          "type": "float",
+          "id": 2
+        },
+        "kickspeedz": {
+          "rule": "required",
+          "type": "float",
+          "id": 3
+        },
+        "veltangent": {
+          "rule": "required",
+          "type": "float",
+          "id": 4
+        },
+        "velnormal": {
+          "rule": "required",
+          "type": "float",
+          "id": 5
+        },
+        "velangular": {
+          "rule": "required",
+          "type": "float",
+          "id": 6
+        },
+        "spinner": {
+          "rule": "required",
+          "type": "bool",
+          "id": 7
+        },
+        "wheelsspeed": {
+          "rule": "required",
+          "type": "bool",
+          "id": 8
+        },
+        "wheel1": {
+          "type": "float",
+          "id": 9
+        },
+        "wheel2": {
+          "type": "float",
+          "id": 10
+        },
+        "wheel3": {
+          "type": "float",
+          "id": 11
+        },
+        "wheel4": {
+          "type": "float",
+          "id": 12
+        }
+      }
+    },
+    "grSim_Commands": {
+      "fields": {
+        "timestamp": {
+          "rule": "required",
+          "type": "double",
+          "id": 1
+        },
+        "isteamyellow": {
+          "rule": "required",
+          "type": "bool",
+          "id": 2
+        },
+        "robotCommands": {
+          "rule": "repeated",
+          "type": "grSim_Robot_Command",
+          "id": 3
+        }
+      }
+    },
+    "grSim_Packet": {
+      "fields": {
+        "commands": {
+          "type": "grSim_Commands",
+          "id": 1
+        },
+        "replacement": {
+          "type": "grSim_Replacement",
+          "id": 2
+        }
+      }
+    },
+    "grSim_RobotReplacement": {
+      "fields": {
+        "x": {
+          "rule": "required",
+          "type": "double",
+          "id": 1
+        },
+        "y": {
+          "rule": "required",
+          "type": "double",
+          "id": 2
+        },
+        "dir": {
+          "rule": "required",
+          "type": "double",
+          "id": 3
+        },
+        "id": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 4
+        },
+        "yellowteam": {
+          "rule": "required",
+          "type": "bool",
+          "id": 5
+        },
+        "turnon": {
+          "type": "bool",
+          "id": 6
+        }
+      }
+    },
+    "grSim_BallReplacement": {
+      "fields": {
+        "x": {
+          "type": "double",
+          "id": 1
+        },
+        "y": {
+          "type": "double",
+          "id": 2
+        },
+        "vx": {
+          "type": "double",
+          "id": 3
+        },
+        "vy": {
+          "type": "double",
+          "id": 4
+        }
+      }
+    },
+    "grSim_Replacement": {
+      "fields": {
+        "ball": {
+          "type": "grSim_BallReplacement",
+          "id": 1
+        },
+        "robots": {
+          "rule": "repeated",
+          "type": "grSim_RobotReplacement",
+          "id": 2
+        }
+      }
+    },
+    "SSL_DetectionBall": {
+      "fields": {
+        "confidence": {
+          "rule": "required",
+          "type": "float",
+          "id": 1
+        },
+        "area": {
+          "type": "uint32",
+          "id": 2
+        },
+        "x": {
+          "rule": "required",
+          "type": "float",
+          "id": 3
+        },
+        "y": {
+          "rule": "required",
+          "type": "float",
+          "id": 4
+        },
+        "z": {
+          "type": "float",
+          "id": 5
+        },
+        "pixelX": {
+          "rule": "required",
+          "type": "float",
+          "id": 6
+        },
+        "pixelY": {
+          "rule": "required",
+          "type": "float",
+          "id": 7
+        }
+      }
+    },
+    "SSL_DetectionRobot": {
+      "fields": {
+        "confidence": {
+          "rule": "required",
+          "type": "float",
+          "id": 1
+        },
+        "robotId": {
+          "type": "uint32",
+          "id": 2
+        },
+        "x": {
+          "rule": "required",
+          "type": "float",
+          "id": 3
+        },
+        "y": {
+          "rule": "required",
+          "type": "float",
+          "id": 4
+        },
+        "orientation": {
+          "type": "float",
+          "id": 5
+        },
+        "pixelX": {
+          "rule": "required",
+          "type": "float",
+          "id": 6
+        },
+        "pixelY": {
+          "rule": "required",
+          "type": "float",
+          "id": 7
+        },
+        "height": {
+          "type": "float",
+          "id": 8
+        }
+      }
+    },
+    "SSL_DetectionFrame": {
+      "fields": {
+        "frameNumber": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 1
+        },
+        "tCapture": {
+          "rule": "required",
+          "type": "double",
+          "id": 2
+        },
+        "tSent": {
+          "rule": "required",
+          "type": "double",
+          "id": 3
+        },
+        "cameraId": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 4
+        },
+        "balls": {
+          "rule": "repeated",
+          "type": "SSL_DetectionBall",
+          "id": 5
+        },
+        "robotsYellow": {
+          "rule": "repeated",
+          "type": "SSL_DetectionRobot",
+          "id": 6
+        },
+        "robotsBlue": {
+          "rule": "repeated",
+          "type": "SSL_DetectionRobot",
+          "id": 7
+        }
+      }
+    },
+    "Vector2f": {
+      "fields": {
+        "x": {
+          "rule": "required",
+          "type": "float",
+          "id": 1
+        },
+        "y": {
+          "rule": "required",
+          "type": "float",
+          "id": 2
+        }
+      }
+    },
+    "SSL_FieldLineSegment": {
+      "fields": {
+        "name": {
+          "rule": "required",
+          "type": "string",
+          "id": 1
+        },
+        "p1": {
+          "rule": "required",
+          "type": "Vector2f",
+          "id": 2
+        },
+        "p2": {
+          "rule": "required",
+          "type": "Vector2f",
+          "id": 3
+        },
+        "thickness": {
+          "rule": "required",
+          "type": "float",
+          "id": 4
+        }
+      }
+    },
+    "SSL_FieldCicularArc": {
+      "fields": {
+        "name": {
+          "rule": "required",
+          "type": "string",
+          "id": 1
+        },
+        "center": {
+          "rule": "required",
+          "type": "Vector2f",
+          "id": 2
+        },
+        "radius": {
+          "rule": "required",
+          "type": "float",
+          "id": 3
+        },
+        "a1": {
+          "rule": "required",
+          "type": "float",
+          "id": 4
+        },
+        "a2": {
+          "rule": "required",
+          "type": "float",
+          "id": 5
+        },
+        "thickness": {
+          "rule": "required",
+          "type": "float",
+          "id": 6
+        }
+      }
+    },
+    "SSL_GeometryFieldSize": {
+      "fields": {
+        "fieldLength": {
+          "rule": "required",
+          "type": "int32",
+          "id": 1
+        },
+        "fieldWidth": {
+          "rule": "required",
+          "type": "int32",
+          "id": 2
+        },
+        "goalWidth": {
+          "rule": "required",
+          "type": "int32",
+          "id": 3
+        },
+        "goalDepth": {
+          "rule": "required",
+          "type": "int32",
+          "id": 4
+        },
+        "boundaryWidth": {
+          "rule": "required",
+          "type": "int32",
+          "id": 5
+        },
+        "fieldLines": {
+          "rule": "repeated",
+          "type": "SSL_FieldLineSegment",
+          "id": 6
+        },
+        "fieldArcs": {
+          "rule": "repeated",
+          "type": "SSL_FieldCicularArc",
+          "id": 7
+        }
+      }
+    },
+    "SSL_GeometryCameraCalibration": {
+      "fields": {
+        "cameraId": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 1
+        },
+        "focalLength": {
+          "rule": "required",
+          "type": "float",
+          "id": 2
+        },
+        "principalPointX": {
+          "rule": "required",
+          "type": "float",
+          "id": 3
+        },
+        "principalPointY": {
+          "rule": "required",
+          "type": "float",
+          "id": 4
+        },
+        "distortion": {
+          "rule": "required",
+          "type": "float",
+          "id": 5
+        },
+        "q0": {
+          "rule": "required",
+          "type": "float",
+          "id": 6
+        },
+        "q1": {
+          "rule": "required",
+          "type": "float",
+          "id": 7
+        },
+        "q2": {
+          "rule": "required",
+          "type": "float",
+          "id": 8
+        },
+        "q3": {
+          "rule": "required",
+          "type": "float",
+          "id": 9
+        },
+        "tx": {
+          "rule": "required",
+          "type": "float",
+          "id": 10
+        },
+        "ty": {
+          "rule": "required",
+          "type": "float",
+          "id": 11
+        },
+        "tz": {
+          "rule": "required",
+          "type": "float",
+          "id": 12
+        },
+        "derivedCameraWorldTx": {
+          "type": "float",
+          "id": 13
+        },
+        "derivedCameraWorldTy": {
+          "type": "float",
+          "id": 14
+        },
+        "derivedCameraWorldTz": {
+          "type": "float",
+          "id": 15
+        }
+      }
+    },
+    "SSL_GeometryData": {
+      "fields": {
+        "field": {
+          "rule": "required",
+          "type": "SSL_GeometryFieldSize",
+          "id": 1
+        },
+        "calib": {
+          "rule": "repeated",
+          "type": "SSL_GeometryCameraCalibration",
+          "id": 2
+        }
+      }
+    },
+    "Log_Frame": {
+      "fields": {
+        "frame": {
+          "rule": "required",
+          "type": "SSL_DetectionFrame",
+          "id": 1
+        },
+        "refboxCmd": {
+          "rule": "required",
+          "type": "string",
+          "id": 2
+        }
+      }
+    },
+    "Refbox_Log": {
+      "fields": {
+        "log": {
+          "rule": "repeated",
+          "type": "Log_Frame",
+          "id": 1
+        }
+      }
+    },
+    "Robots_Status": {
+      "fields": {
+        "robotsStatus": {
+          "rule": "repeated",
+          "type": "Robot_Status",
+          "id": 1
+        }
+      }
+    },
+    "Robot_Status": {
+      "fields": {
+        "robotId": {
+          "rule": "required",
+          "type": "int32",
+          "id": 1
+        },
+        "infrared": {
+          "rule": "required",
+          "type": "bool",
+          "id": 2
+        },
+        "flatKick": {
+          "rule": "required",
+          "type": "bool",
+          "id": 3
+        },
+        "chipKick": {
+          "rule": "required",
+          "type": "bool",
+          "id": 4
+        }
+      }
+    },
+    "SSL_WrapperPacket": {
+      "fields": {
+        "detection": {
+          "type": "SSL_DetectionFrame",
+          "id": 1
+        },
+        "geometry": {
+          "type": "SSL_GeometryData",
+          "id": 2
+        }
+      }
+    }
+  }
+}
