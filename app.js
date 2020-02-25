@@ -5,7 +5,11 @@ var protobuf = require("protobufjs");
 const dgram = require('dgram');
 const server = dgram.createSocket({ type: 'udp4', reuseAddr: true })
 const address = '224.5.23.2';
-const port = '10020'
+const port = '20011'
+const ports = '10006'
+const portts = '10020'
+const host = '127.0.0.1'
+
 
 server.on('error', (err) => {
   console.log(`server error:\n${err.stack}`);
@@ -16,11 +20,17 @@ server.on('error', (err) => {
   //console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
 //});
 
+server.on('listening', () => {
+  server.setMulticastTTL(128)
 
+})
+server.bind(null, host, ()=> {
+  console.log(`server listeningg ${host}:${port} `);
+});
 
 
 /* --------------------------------------------------------------------------------------------- */
-/*
+
 var gamepad = require("gamepad");
  
 // Initialize the library
@@ -64,7 +74,7 @@ gamepad.on("down", function (id, num) {
     num: num,
   });
 });
-*/
+
 
 /* ------------------------------------------------------------------------------------------------ */
 
@@ -87,40 +97,41 @@ protobuf.load("./proto/grSim_Packet.proto", function(err, root) {
       turnon: false };
 
 
-var payloadPacket = {
-  commands: {
-    timestamp: Date.now(),
-    isteamyellow: true,
-    robotCommands: [
-      {
-        id: 1,
-        kickspeedx: 2,
-        kickspeedz: 2,
-        spinner: true,
-        velnormal: 1,
-        velangular: 1,
-        veltangent: 1,
-        wheelsspeed: false,
+    var payloadPacket = {
+      commands: {
+        timestamp: Date.now(),
+        isteamyellow: true,
+        robotCommands: [
+          {
+            id: 1,
+            kickspeedx: 2,
+            kickspeedz: 2,
+            spinner: true,
+            velnormal: 1,
+            velangular: 1,
+            veltangent: 1,
+            wheelsspeed: false,
+          },
+        ],
       },
-    ],
-  },
-  replacement:{
-    robots: [{ 
-      x: 1.2,
-      y:2.2,
-      dir:1,
-      id:1,
-      yellowteam: true, 
-      turnon: true,
-    }],
-    ball: [{
-      x:1,
-      y:1,
-      vx:1,
-      vy:1
-    }]
+      replacement:{
+        ball: {
+          x: 1,
+          y: 0,
+          vx: 0,
+          vy: 0
+        },
+        robots: [{ 
+          x: 1.2,
+          y:2.2,
+          dir:1,
+          id:1,
+          yellowteam: true, 
+          turnon: true,
+        }]
+        
 
-  }
+    }
   
 }
 
@@ -143,16 +154,15 @@ var payloadPacket = {
     // ... do something with buffer
     console.log(buffer)
     console.log(buffer2)
-    server.send(
-      buffer2,
-      port,
-      address,
-    )
+    
 
     // Decode an Uint8Array (browser) or Buffer (node) to a message
-    //var message = RobotReplacementMessage.decode(buffer);
+   // var message = RobotReplacementMessage.decode(buffer);
+
+    var message = RobotPacketMessage.decode(buffer2);
+
     // ... do something with message
-    //console.log(message)
+    console.log(message)
 
 
     // If the application uses length-delimited buffers, there is also encodeDelimited and decodeDelimited.
@@ -172,13 +182,16 @@ var payloadPacket = {
       enums: String,
       bytes: String,
       double: String,
-      bool: String
+      bool: String},
       // see ConversionOptions
-  });
+
+      server.send(
+        buffer2,
+        port,
+        host,
+      )
+  );
 
 });
 
-server.bind(port, address, ()=> {
-  console.log(`server listeningg ${address}:${port} `);
-  
-});
+
