@@ -31,6 +31,11 @@ server.bind(null, host, ()=> {
 
 /* --------------------------------------------------------------------------------------------- */
 
+
+
+
+
+/* ------------------------------------------------------------------------------------------------ */
 var gamepad = require("gamepad");
  
 // Initialize the library
@@ -48,41 +53,50 @@ for (var i = 0, l = gamepad.numDevices(); i < l; i++) {
 setInterval(gamepad.processEvents, 16);
 // Scan for new gamepads as a slower rate
 setInterval(gamepad.detectDevices, 500);
+var truc=0;
 
+var xRobot=0
+var YRobot
 // Listen for move events on all gamepads
 gamepad.on("move", function (id, axis, value) {
-    console.log("move", {
-      id: id,
-      axis: axis,
-      value: value,
-    });
-  });
-
-
-// Listen for button up events on all gamepads
-gamepad.on("up", function (id, num) {
-  console.log("up", {
+  console.log("move", {
     id: id,
-    num: num,
-  });
-});
- 
-// Listen for button down events on all gamepads
-gamepad.on("down", function (id, num) {
-  console.log("down", {
-    id: id,
-    num: num,
-  });
-});
+    axis: axis,
+    value: value,
+  });   
+  if(axis==0){
+    
+      xRobot = value ;
+    
+    
+    
+  }
+  if(axis==1){
+    
+      YRobot=-value;
+    
+  }
+    
+  
+  /*
+  if(axis==0){
+    XRobot = value;
+  }
+
+  if(axis==1){
+    YRobot = -value;
+  }*/
 
 
-/* ------------------------------------------------------------------------------------------------ */
-
-
-protobuf.load("./proto/grSim_Packet.proto", function(err, root) {
+  console.log(axis)
+  console.log("valeur"+value)
+  
+  // Create a new message
+  protobuf.load("./proto/grSim_Packet.proto", function(err, root) {
     if (err)
         throw err;
-
+       
+        
     // Obtain a message type
     var RobotReplacementMessage = root.lookupType("grSim_RobotReplacement");
     var RobotPacketMessage = root.lookupType("grSim_Packet");
@@ -116,21 +130,20 @@ protobuf.load("./proto/grSim_Packet.proto", function(err, root) {
       },
       replacement:{
         ball: {
-          x: 1,
+          x: 0,
           y: 0,
           vx: 0,
           vy: 0
         },
         robots: [{ 
-          x: 1.2,
-          y:2.2,
+          x: 0+xRobot,
+          y:0+YRobot,
           dir:1,
           id:1,
           yellowteam: true, 
           turnon: true,
         }]
         
-
     }
   
 }
@@ -144,16 +157,15 @@ protobuf.load("./proto/grSim_Packet.proto", function(err, root) {
         if (errMsg2)
             throw Error(errMsg2);
 
-    // Create a new message
-    var messageReplacement = RobotReplacementMessage.create(payloadRobotReplacement); // or use .fromObject if conversion is necessary
+     var messageReplacement = RobotReplacementMessage.create(payloadRobotReplacement); // or use .fromObject if conversion is necessary
     var messagePacket = RobotPacketMessage.create(payloadPacket);
 
     // Encode a message to an Uint8Array (browser) or Buffer (node)
     var buffer = RobotReplacementMessage.encode(messageReplacement).finish();
     var buffer2 = RobotPacketMessage.encode(messagePacket).finish();
     // ... do something with buffer
-    console.log(buffer)
-    console.log(buffer2)
+    //console.log(buffer)
+    //console.log(buffer2)
     
 
     // Decode an Uint8Array (browser) or Buffer (node) to a message
@@ -162,7 +174,7 @@ protobuf.load("./proto/grSim_Packet.proto", function(err, root) {
     var message = RobotPacketMessage.decode(buffer2);
 
     // ... do something with message
-    console.log(message)
+    //console.log(message)
 
 
     // If the application uses length-delimited buffers, there is also encodeDelimited and decodeDelimited.
@@ -193,5 +205,28 @@ protobuf.load("./proto/grSim_Packet.proto", function(err, root) {
   );
 
 });
+
+console.log(xRobot)
+});
+
+
+// Listen for button up events on all gamepads
+gamepad.on("up", function (id, num) {
+  console.log("up", {
+    id: id,
+    num: num,
+  });
+  
+});
+ 
+// Listen for button down events on all gamepads
+gamepad.on("down", function (id, num) {
+  console.log("down", {
+    id: id,
+    num: num,
+  });
+});
+
+/* ------------------------------------------------------------------------------------------------ */
 
 

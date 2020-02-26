@@ -13,7 +13,12 @@
     "@grpc/proto-loader": "^0.5.3",
     "axios": "^0.19.2",
     "express": "^4.17.1",
+    "gamecontroller": "0.0.2",
+    "gamecontroller.js": "^1.4.4",
+    "gamepad": "^1.6.0",
+    "gamepads": "^1.2.2",
     "grpc": "^1.24.2",
+    "joypad.js": "^2.1.4",
     "node-gamepad": "^0.1.15",
     "protobufjs": "^6.8.8"
   }
