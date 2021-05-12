@@ -17,7 +17,7 @@
     "gamecontroller.js": "^1.4.4",
     "gamepad": "^1.6.0",
     "gamepads": "^1.2.2",
-    "grpc": "^1.24.2",
+    "grpc": "^1.24.9",
     "joypad.js": "^2.1.4",
     "node-gamepad": "^0.1.15",
     "protobufjs": "^6.8.8"
