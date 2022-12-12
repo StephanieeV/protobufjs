@@ -12,7 +12,7 @@
   "dependencies": {
     "@grpc/proto-loader": "^0.5.3",
     "axios": "^0.19.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "gamecontroller": "0.0.2",
     "gamecontroller.js": "^1.4.4",
     "gamepad": "^1.6.0",
